@@ -1,0 +1,46 @@
+## Pre Req
+sudo apt-get install -y build-essential libtool autotools-dev autoconf pkg-config libssl-dev libboost-all-dev libminiupnpc-dev unzip git tcl
+
+## Add User
+sudo adduser --system --group --shell /usr/sbin/nologin --home /var/lib/bitcoind bitcoin
+
+## Required Directory
+sudo mkdir /etc/bitcoind
+sudo mkdir /run/bitcoind
+sudo chown bitcoin:bitcoin /etc/bitcoind
+sudo chown bitcoin:bitcoin /run/bitcoind
+
+## Berkeley 4.8 (Is this still Required ?)
+wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
+unzip db-4.8.30.zip
+cd db-4.8.30/build_unix/
+../dist/configure --prefix=/usr/local --enable-cxx
+sudo su
+make && make install
+exit
+
+## Download and Install Bitcoind
+wget https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-x86_64-linux-gnu.tar.gz
+tar xzvf bitcoin-0.17.1-x86_64-linux-gnu.tar.gz
+sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/bitcoind
+sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/bitcoin-cli
+
+## Service
+wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/contrib/init/bitcoind.service -O /lib/systemd/system/bitcoind.service
+
+## Config File
+wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitcoin.conf -O /etc/bitcoind/bitcoin.conf
+
+
+## Modify Config File ExecStart
+vim /etc/bitcoind/bitcoin.conf
+
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/etc/bitcoind/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
+
+sudo chmod 600 /etc/bitcoind/bitcoin.conf
+
+sudo systemctl daemon-reload
+sudo systemctl enable bitcoind
+sudo systemctl start bitcoind
+
+## I will test again later :)
