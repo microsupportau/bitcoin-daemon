@@ -35,7 +35,7 @@ wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitco
 ## Modify Config File ExecStart
 vim /etc/bitcoind/bitcoin.conf
 
-ExecStart=/usr/local/bin/bitcoind -daemon -conf=/etc/bitcoind/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/var/lib/bitcoind/.bitcon/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
 
 sudo chmod 600 /etc/bitcoind/bitcoin.conf
 
