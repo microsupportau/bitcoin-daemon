@@ -6,6 +6,8 @@ sudo adduser --system --group --shell /usr/sbin/nologin --home /var/lib/bitcoind
 
 ## Create Run Directory
 sudo mkdir /run/bitcoind
+sudo mkdir /var/lib/bitcoind/.bitcoin/
+sudo chown bitcoin:bitcoin /run/bitcoind
 sudo chown bitcoin:bitcoin /run/bitcoind
 
 ## Berkeley 4.8 (Is this still Required ?)
