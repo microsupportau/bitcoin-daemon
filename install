@@ -4,10 +4,8 @@ sudo apt-get install -y build-essential libtool autotools-dev autoconf pkg-confi
 ## Add User
 sudo adduser --system --group --shell /usr/sbin/nologin --home /var/lib/bitcoind bitcoin
 
-## Required Directory
-sudo mkdir /etc/bitcoind
+## Create Run Directory
 sudo mkdir /run/bitcoind
-sudo chown bitcoin:bitcoin /etc/bitcoind
 sudo chown bitcoin:bitcoin /run/bitcoind
 
 ## Berkeley 4.8 (Is this still Required ?)
@@ -29,7 +27,7 @@ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/bitcoi
 wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/contrib/init/bitcoind.service -O /lib/systemd/system/bitcoind.service
 
 ## Config File
-wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitcoin.conf -O /etc/bitcoind/bitcoin.conf
+wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitcoin.conf -O /var/lib/bitcoind/.bitcoin/bitcoin.conf
 
 
 ## Modify Config File ExecStart
