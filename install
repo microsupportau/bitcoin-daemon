@@ -26,18 +26,15 @@ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/bitcoi
 sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/bitcoin-cli
 
 ## Service
-wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/contrib/init/bitcoind.service -O /lib/systemd/system/bitcoind.service
+sudo wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/contrib/init/bitcoind.service -O /lib/systemd/system/bitcoind.service
 
 ## Config File
-wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitcoin.conf -O /var/lib/bitcoind/.bitcoin/bitcoin.conf
+sudo wget https://raw.githubusercontent.com/bitcoin/bitcoin/0.17/share/examples/bitcoin.conf -O /var/lib/bitcoind/.bitcoin/bitcoin.conf
+sudo chmod 600 /var/lib/bitcoind/.bitcoin/bitcoin.conf
 
-
-## Modify Config File ExecStart
-vim /etc/bitcoind/bitcoin.conf
-
+## Modify Service File ExecStart
+sudo vim /lib/systemd/system/bitcoind.service
 ExecStart=/usr/local/bin/bitcoind -daemon -conf=/var/lib/bitcoind/.bitcoin/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
-
-sudo chmod 600 /etc/bitcoind/bitcoin.conf
 
 sudo systemctl daemon-reload
 sudo systemctl enable bitcoind
